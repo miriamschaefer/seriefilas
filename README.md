@@ -1,1 +1,1 @@
-Ejercicio evaluación intermedia del módulo 2 de Miriam Suárez.
+Ejercicio evaluación final del módulo 2 de Miriam Suárez.
