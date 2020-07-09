@@ -19,26 +19,26 @@ function getShowsFromApi() {
     .then((data) => {
       for (let item of data) {
         shows = [item.show.name, item.show.image.medium, item.show.id];
-        // renderShows(shows, '#shows-search-result');
+        renderShows(shows, '#shows-search-result');
         console.log(shows);
       }
     });
 }
 
-//las pinto en HTML
+// las pinto en HTML
 
-// function renderShows(arr, selector) {
-//   let codeHTML = '';
-//   for (const elem of arr) {
-//     codeHTML += `<li class="recipe-container" id="${elem.id}">`;
-//     codeHTML += `<div class="img-container">`;
-//     codeHTML += `<img src="${elem.image.medium}"/>`;
-//     codeHTML += `</div>`;
-//     codeHTML += `<h2 class="recipe-title">${elem.name}</h2>`;
-//     codeHTML += `</li>`;
-//   }
-//   const element = document.querySelector(selector);
-//   element.innerHTML = codeHTML;
-// }
+function renderShows(arr, selector) {
+  let codeHTML = '';
+  for (const elem of arr) {
+    codeHTML += `<li class="recipe-container" id="${elem.id}">`;
+    codeHTML += `<div class="img-container">`;
+    codeHTML += `<img src="${elem.image}"/>`;
+    codeHTML += `</div>`;
+    codeHTML += `<h2 class="recipe-title">${elem.name}</h2>`;
+    codeHTML += `</li>`;
+  }
+  const element = document.querySelector(selector);
+  element.innerHTML = codeHTML;
+}
 
 button.addEventListener('click', getShowsFromApi);
