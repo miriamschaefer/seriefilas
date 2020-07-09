@@ -2,4 +2,4 @@
 
 ## Adalab
 
-<img src="./Diagrama de flujo.png" width="1000">
+<img src="./Diagrama de flujo.png" width="800">
