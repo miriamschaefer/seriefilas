@@ -1,11 +1,12 @@
 <main class="main">
   <section class="main__search">
     <h2 class="main__search__title">Inserte aquí su buscador de series</h2>
-    <form action="" method="POST" class="main__search__form" id="js-form">
+    <form method="GET" class="main__search__form" id="js-form">
       <input
         type="text"
         class="main__search__form__input"
         id="js-search-input"
+        placeholder="Los Soprano"
       />
       <button type="button" class="main__search__form__button" id="js-button">
         Busca, busca
@@ -13,6 +14,12 @@
     </form>
   </section>
 
-  <section class="main__results js-results-container"></section>
-  <section class="main__favs js-favs-container"></section>
+  <section class="main__results">
+    <ul id="shows-search-result"></ul>
+  </section>
+  <section class="main__favs">
+    <h2>Tus series favoritas</h2>
+    <p class="fav-counter" id="fav-counter"></p>
+    <ul id="shows-favs-container"></ul>
+  </section>
 </main>
