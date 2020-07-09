@@ -1,7 +1,46 @@
 body {
   padding: 2rem;
   height: 100vh;
-  background: url("../images/logo-adalab.png") center center no-repeat
-    $color-white;
   font-family: $font-main;
+  background-color: $color-background;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &__search {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    &__title {
+      margin-bottom: 30px;
+    }
+
+    &__form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      &__input {
+        height: 35px;
+        width: 250px;
+        border: none;
+        border-radius: 20px;
+      }
+
+      &__button {
+        margin-top: 25px;
+        width: 130px;
+        height: 35px;
+        border-radius: 15px;
+        color: $color-white;
+        background-color: $color-quaternary;
+      }
+    }
+  }
 }
