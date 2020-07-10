@@ -47,6 +47,7 @@ function getShowsFromApi() {
       }
       renderShows(shows, '#shows-search-result');
       addListeners();
+      addListenersToFavs();
     });
 }
 
@@ -73,6 +74,27 @@ function renderShows(arr, selector) {
   element.innerHTML = codeHTML;
 }
 
+function renderFavShows(arr, selector) {
+  let codeHTML = '';
+
+  if (arr.length === 0) {
+    codeHTML += `<h2 class="show-title">No tienes ningún favorito.</h2>`;
+  } else {
+    for (let item of arr) {
+      {
+        codeHTML += `<li class="show-container js-show-container added-to-favs" id="${item.id}">`;
+        codeHTML += `<div class="img-container">`;
+        codeHTML += `<img src="${item.image}"/>`;
+        codeHTML += `</div>`;
+        codeHTML += `<h2 class="show-title">${item.name}</h2>`;
+        codeHTML += `</li>`;
+      }
+    }
+  }
+  const element = document.querySelector(selector);
+  element.innerHTML = codeHTML;
+}
+
 // add listeners to the items, so they recognize clicks on them.
 
 function addListeners() {
@@ -81,6 +103,16 @@ function addListeners() {
   for (const elem of fav) {
     if (elem !== undefined) {
       elem.addEventListener('click', addToFavs);
+    }
+  }
+}
+
+function addListenersToFavs() {
+  const favedShow = document.querySelectorAll('#fav-shows-container');
+
+  for (const elem of favedShow) {
+    if (elem !== undefined) {
+      elem.addEventListener('click', removeFromFavs);
     }
   }
 }
@@ -95,7 +127,7 @@ function addToFavs(ev) {
     (elem) => elem.id === clickedShowId
   );
 
-  console.log(clickedShowIndex);
+  // console.log(clickedShowIndex);
 
   //and then, it checks if we've already added to favs, if we haven't, it adds it to our favShows array, if we had, it removes it (also removes the background color)
 
@@ -110,10 +142,18 @@ function addToFavs(ev) {
 
   //at the same time, we use our render function again to paint our favs in the container.
 
-  renderShows(favShows, '#fav-shows-container');
+  renderFavShows(favShows, '#fav-shows-container');
   counter.innerHTML = `${favShows.length} favs`;
 }
-
+// function removeFromFavs(ev) {
+//   const clickedFav = ev.currentTarget;
+//   const clickedFavId = parseInt(clickedFav.id);
+//   console.log(clickedFavId);
+//   const clickedFavIndex = favShows.findIndex(
+//     (elem) => elem.id === clickedFavId
+//   );
+//   console.log(clickedFavIndex);
+// }
 function handleClick(ev) {
   ev.preventDefault();
   getShowsFromApi();
