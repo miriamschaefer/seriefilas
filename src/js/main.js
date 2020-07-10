@@ -1,6 +1,7 @@
 'use strict';
 
 //botón que inicia la búsqueda
+// const form = document.querySelector('.js-form');
 const button = document.querySelector('#js-button');
 
 //input de texto
@@ -18,6 +19,7 @@ function getShowsFromApi() {
   fetch(ENDPOINT + searchInput.value)
     .then((response) => response.json())
     .then((data) => {
+      shows = [];
       for (let item of data) {
         showObject = {
           name: item.show.name,
@@ -25,6 +27,7 @@ function getShowsFromApi() {
           id: item.show.id,
         };
         shows.push(showObject);
+        renderShows(shows, '#shows-search-result');
       }
     });
 
@@ -35,21 +38,31 @@ function getShowsFromApi() {
 
 function renderShows(arr, selector) {
   let codeHTML = '';
-  for (let item of arr) {
-    codeHTML += `<li class="show-container" id="${item.showObject.id}">`;
-    codeHTML += `<div class="img-container">`;
-    codeHTML += `<img src="${item.showObject.image}"/>`;
-    codeHTML += `</div>`;
-    codeHTML += `<h2 class="show-title">${item.showObject.name}</h2>`;
-    codeHTML += `</li>`;
+
+  if (arr.length === null) {
+    console.log('Error');
+    codeHTML += `<h2 class="show-title">No hemos encontrado naíta.</h2>`;
+  } else {
+    for (let item of arr) {
+      {
+        codeHTML += `<li class="show-container" id="${item.id}">`;
+        codeHTML += `<div class="img-container">`;
+        codeHTML += `<img src="${item.image}"/>`;
+        codeHTML += `</div>`;
+        codeHTML += `<h2 class="show-title">${item.name}</h2>`;
+        codeHTML += `</li>`;
+      }
+    }
+
+    const element = document.querySelector(selector);
+    element.innerHTML = codeHTML;
   }
-  const element = document.querySelector(selector);
-  element.innerHTML = codeHTML;
 }
 
-function handleClick() {
+function handleClick(ev) {
+  ev.preventDefault();
   getShowsFromApi();
-  renderShows(shows, '#shows-search-result');
 }
 
+// form.addEventListener('submit', getShowsFromApi);
 button.addEventListener('click', handleClick);
