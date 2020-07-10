@@ -21,17 +21,23 @@ function getShowsFromApi() {
     .then((data) => {
       shows = [];
       for (let item of data) {
+        let img = '';
+        if (item.show.image) {
+          img = item.show.image.medium;
+        } else {
+          img = 'https://via.placeholder.com/210x295/ffffff/666666/?text=TV';
+        }
         showObject = {
           name: item.show.name,
-          image: item.show.image.medium,
+          image: img,
           id: item.show.id,
         };
         shows.push(showObject);
-        renderShows(shows, '#shows-search-result');
       }
-    });
+      renderShows(shows, '#shows-search-result');
 
-  console.log(shows);
+      console.log(shows);
+    });
 }
 
 // las pinto en HTML
@@ -39,7 +45,7 @@ function getShowsFromApi() {
 function renderShows(arr, selector) {
   let codeHTML = '';
 
-  if (arr.length === null) {
+  if (arr.length === 0) {
     console.log('Error');
     codeHTML += `<h2 class="show-title">No hemos encontrado naíta.</h2>`;
   } else {
@@ -53,10 +59,9 @@ function renderShows(arr, selector) {
         codeHTML += `</li>`;
       }
     }
-
-    const element = document.querySelector(selector);
-    element.innerHTML = codeHTML;
   }
+  const element = document.querySelector(selector);
+  element.innerHTML = codeHTML;
 }
 
 function handleClick(ev) {
