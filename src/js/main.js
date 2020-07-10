@@ -1,37 +1,43 @@
 'use strict';
 
-//botón que inicia la búsqueda
+// pending to activate the enter button to submit
 // const form = document.querySelector('.js-form');
+
+//search button
 const button = document.querySelector('#js-button');
 
-//contador de favoritos
+//fav counter
 
 let counter = document.querySelector('#fav-counter');
 
-//input de texto
+//search text input
 
 const searchInput = document.querySelector('#js-search-input');
 
-//variable de la URL de la API
+//API URL
 const ENDPOINT = 'http://api.tvmaze.com/search/shows?q=';
 
 let shows = [];
 let favShows = [];
 let showObject = {};
 
-//Busco las series en la API
+//Get shows data from API
 function getShowsFromApi() {
   fetch(ENDPOINT + searchInput.value)
     .then((response) => response.json())
     .then((data) => {
       shows = [];
       for (let item of data) {
+        //in case the object doesn't have an image, place the placeholder
         let img = '';
         if (item.show.image) {
           img = item.show.image.medium;
         } else {
           img = 'https://via.placeholder.com/210x295/ffffff/666666/?text=TV';
         }
+
+        //show info in an object
+
         showObject = {
           name: item.show.name,
           image: img,
@@ -41,18 +47,15 @@ function getShowsFromApi() {
       }
       renderShows(shows, '#shows-search-result');
       addListeners();
-
-      console.log(shows);
     });
 }
 
-// las pinto en HTML
+// render info in HTML, to use this function you have to assign its parameters, both the array to paint and the selector -or place- you wanna render it.
 
 function renderShows(arr, selector) {
   let codeHTML = '';
 
   if (arr.length === 0) {
-    console.log('Error');
     codeHTML += `<h2 class="show-title">No hemos encontrado naíta.</h2>`;
   } else {
     for (let item of arr) {
@@ -70,7 +73,7 @@ function renderShows(arr, selector) {
   element.innerHTML = codeHTML;
 }
 
-//le añado listeners a las series
+// add listeners to the items, so they recognize clicks on them.
 
 function addListeners() {
   const fav = document.querySelectorAll('.js-show-container');
@@ -82,9 +85,10 @@ function addListeners() {
   }
 }
 
-//función para añadir y eliminar de favoritos
+// function to add and remove shows from favorites.
 
 function addToFavs(ev) {
+  //this anon function - clickedShowIndex - looks for the position in the array of the object we wanna add to favs.
   const clickedShow = ev.currentTarget;
   const clickedShowId = parseInt(clickedShow.id);
   const clickedShowIndex = favShows.findIndex(
@@ -92,6 +96,8 @@ function addToFavs(ev) {
   );
 
   console.log(clickedShowIndex);
+
+  //and then, it checks if we've already added to favs, if we haven't, it adds it to our favShows array, if we had, it removes it (also removes the background color)
 
   if (clickedShowIndex === -1) {
     const favShow = shows.find((show) => show.id === clickedShowId);
@@ -101,10 +107,11 @@ function addToFavs(ev) {
     favShows.splice(clickedShowIndex, 1);
     clickedShow.classList.remove('added-to-favs');
   }
-  renderShows(favShows, '#fav-shows-container');
 
+  //at the same time, we use our render function again to paint our favs in the container.
+
+  renderShows(favShows, '#fav-shows-container');
   counter.innerHTML = `${favShows.length} favs`;
-  console.log(favShows);
 }
 
 function handleClick(ev) {
