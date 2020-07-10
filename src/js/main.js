@@ -35,6 +35,8 @@ function getShowsFromApi() {
         shows.push(showObject);
       }
       renderShows(shows, '#shows-search-result');
+      addListeners();
+      addToFavs(ev);
 
       console.log(shows);
     });
@@ -51,7 +53,7 @@ function renderShows(arr, selector) {
   } else {
     for (let item of arr) {
       {
-        codeHTML += `<li class="show-container" id="${item.id}">`;
+        codeHTML += `<li class="show-container js-show-container" id="${item.id}">`;
         codeHTML += `<div class="img-container">`;
         codeHTML += `<img src="${item.image}"/>`;
         codeHTML += `</div>`;
@@ -62,6 +64,25 @@ function renderShows(arr, selector) {
   }
   const element = document.querySelector(selector);
   element.innerHTML = codeHTML;
+}
+
+//le añado listeners a las series
+
+function addListeners() {
+  const clickedShows = document.querySelectorAll('.js-show-container');
+
+  for (const elem of clickedShows) {
+    if (elem !== undefined) {
+      elem.addEventListener('click', addToFavs);
+    }
+  }
+}
+
+function addToFavs(ev) {
+  const clickedShow = ev.currentTarget;
+  console.log(clickedShow.id);
+
+  clickedShow.classList.toggle('change-background');
 }
 
 function handleClick(ev) {
