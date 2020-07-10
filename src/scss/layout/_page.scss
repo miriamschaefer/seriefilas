@@ -43,6 +43,22 @@ body {
       }
     }
   }
+
+  &__results {
+    &__list {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
+
+  &__favs {
+    &__list {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
 }
 
 .added-to-favs {

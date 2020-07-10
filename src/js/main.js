@@ -101,7 +101,7 @@ function addToFavs(ev) {
     favShows.splice(clickedShowIndex, 1);
     clickedShow.classList.remove('added-to-favs');
   }
-  renderShows(favShows, '#shows-favs-container');
+  renderShows(favShows, '#fav-shows-container');
 
   counter.innerHTML = `${favShows.length} favs`;
   console.log(favShows);
