@@ -4,6 +4,10 @@
 // const form = document.querySelector('.js-form');
 const button = document.querySelector('#js-button');
 
+//contador de favoritos
+
+let counter = document.querySelector('#fav-counter');
+
 //input de texto
 
 const searchInput = document.querySelector('#js-search-input');
@@ -12,6 +16,7 @@ const searchInput = document.querySelector('#js-search-input');
 const ENDPOINT = 'http://api.tvmaze.com/search/shows?q=';
 
 let shows = [];
+let favShows = [];
 let showObject = {};
 
 //Busco las series en la API
@@ -36,7 +41,6 @@ function getShowsFromApi() {
       }
       renderShows(shows, '#shows-search-result');
       addListeners();
-      addToFavs(ev);
 
       console.log(shows);
     });
@@ -69,20 +73,38 @@ function renderShows(arr, selector) {
 //le añado listeners a las series
 
 function addListeners() {
-  const clickedShows = document.querySelectorAll('.js-show-container');
+  const fav = document.querySelectorAll('.js-show-container');
 
-  for (const elem of clickedShows) {
+  for (const elem of fav) {
     if (elem !== undefined) {
       elem.addEventListener('click', addToFavs);
     }
   }
 }
 
+//función para añadir y eliminar de favoritos
+
 function addToFavs(ev) {
   const clickedShow = ev.currentTarget;
-  console.log(clickedShow.id);
+  const clickedShowId = parseInt(clickedShow.id);
+  const clickedShowIndex = favShows.findIndex(
+    (elem) => elem.id === clickedShowId
+  );
 
-  clickedShow.classList.toggle('change-background');
+  console.log(clickedShowIndex);
+
+  if (clickedShowIndex === -1) {
+    const favShow = shows.find((show) => show.id === clickedShowId);
+    favShows.push(favShow);
+    clickedShow.classList.add('added-to-favs');
+  } else {
+    favShows.splice(clickedShowIndex, 1);
+    clickedShow.classList.remove('added-to-favs');
+  }
+  renderShows(favShows, '#shows-favs-container');
+
+  counter.innerHTML = `${favShows.length} favs`;
+  console.log(favShows);
 }
 
 function handleClick(ev) {
