@@ -11,6 +11,7 @@ const searchInput = document.querySelector('#js-search-input');
 const ENDPOINT = 'http://api.tvmaze.com/search/shows?q=';
 
 let shows = [];
+let showObject = {};
 
 //Busco las series en la API
 function getShowsFromApi() {
@@ -18,27 +19,37 @@ function getShowsFromApi() {
     .then((response) => response.json())
     .then((data) => {
       for (let item of data) {
-        shows = [item.show.name, item.show.image.medium, item.show.id];
-        renderShows(shows, '#shows-search-result');
-        console.log(shows);
+        showObject = {
+          name: item.show.name,
+          image: item.show.image.medium,
+          id: item.show.id,
+        };
+        shows.push(showObject);
       }
     });
+
+  console.log(shows);
 }
 
 // las pinto en HTML
 
 function renderShows(arr, selector) {
   let codeHTML = '';
-  for (const elem of arr) {
-    codeHTML += `<li class="recipe-container" id="${elem.id}">`;
+  for (let item of arr) {
+    codeHTML += `<li class="show-container" id="${item.showObject.id}">`;
     codeHTML += `<div class="img-container">`;
-    codeHTML += `<img src="${elem.image}"/>`;
+    codeHTML += `<img src="${item.showObject.image}"/>`;
     codeHTML += `</div>`;
-    codeHTML += `<h2 class="recipe-title">${elem.name}</h2>`;
+    codeHTML += `<h2 class="show-title">${item.showObject.name}</h2>`;
     codeHTML += `</li>`;
   }
   const element = document.querySelector(selector);
   element.innerHTML = codeHTML;
 }
 
-button.addEventListener('click', getShowsFromApi);
+function handleClick() {
+  getShowsFromApi();
+  renderShows(shows, '#shows-search-result');
+}
+
+button.addEventListener('click', handleClick);
