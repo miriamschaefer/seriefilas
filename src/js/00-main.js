@@ -10,6 +10,10 @@ const button = document.querySelector('#js-button');
 
 let counter = document.querySelector('#fav-counter');
 
+//items in the mainsearch results container, used to remove the favs from the result section
+
+let searchResultItems = '';
+
 //search text input
 
 const searchInput = document.querySelector('#js-search-input');
@@ -48,6 +52,7 @@ function getShowsFromApi() {
       renderShows(shows, '#shows-search-result');
       renderFavShows(favShows, '#fav-shows-container');
       addListeners();
+      addListenerToFav();
     });
 }
 
@@ -72,6 +77,10 @@ function renderShows(arr, selector) {
   }
   const element = document.querySelector(selector);
   element.innerHTML = codeHTML;
+
+  //this allows us to remove the shows which are inside the fav list
+
+  searchResultItems = element.querySelectorAll('.js-main-show-container');
 }
 
 function renderFavShows(arr, selector) {
@@ -94,6 +103,7 @@ function renderFavShows(arr, selector) {
   }
   const element = document.querySelector(selector);
   element.innerHTML = codeHTML;
+  addListenerToFav();
 }
 
 // add listeners to the items, so they recognize clicks on them.
@@ -111,15 +121,15 @@ function addListeners() {
 
 //this is the remove from favs listener (the x button)
 
-// function removeFavListener() {
-//   const deleteFav = document.querySelectorAll('.js-fav-show-container');
+function addListenerToFav() {
+  const deleteFav = document.querySelectorAll('.js-fav-show-container');
 
-//   for (const elem of deleteFav) {
-//     if (elem !== undefined) {
-//       elem.addEventListener('click', removeFromFavs);
-//     }
-//   }
-// }
+  for (const elem of deleteFav) {
+    if (elem !== undefined) {
+      elem.addEventListener('click', removeFromFavs);
+    }
+  }
+}
 
 // function to add and remove shows from favorites from the main section.
 
@@ -147,40 +157,30 @@ function addToFavs(ev) {
   //at the same time, we use our render function again to paint our favs in the container.
 
   renderFavShows(favShows, '#fav-shows-container');
-
-  counter.innerHTML = `${favShows.length} favs`;
   saveLocalStorage();
+  updateCounter();
 }
 
-// function removeFromFavs(ev) {
-//   //this anon function - clickedShowIndex - looks for the position in the array of the object we wanna add to favs.
-//   const removeThisFav = ev.currentTarget;
-//   const removeThisFavId = parseInt(removeThisFav.id);
-//   const favShowIndex = favShows.findIndex(
-//     (elem) => elem.id === removeThisFavId
-//   );
+function removeFromFavs(ev) {
+  //this anon function - clickedShowIndex - looks for the position in the array of the object we wanna add to favs.
+  const removeThisFav = ev.currentTarget;
+  const removeThisFavId = parseInt(removeThisFav.id);
+  const favShowIndex = favShows.findIndex(
+    (elem) => elem.id === removeThisFavId
+  );
+  const mainShowIndex = shows.findIndex((elem) => elem.id === removeThisFavId);
 
-// console.log(favShowIndex);
-
-//and then, it checks if we've already added to favs, if we haven't, it adds it to our favShows array, if we had, it removes it (also removes the background color)
-
-// if (clickedShowIndex === -1) {
-//   const favShow = shows.find((show) => show.id === clickedShowId);
-//   favShows.push(favShow);
-//   clickedShow.classList.add('added-to-favs');
-// } else {
-//   favShows.splice(clickedShowIndex, 1);
-//   clickedShow.classList.remove('added-to-favs');
-// }
-
-// click handler
-
-function handleClick(ev) {
-  ev.preventDefault();
-  getShowsFromApi();
+  console.log(favShowIndex);
+  favShows.splice(favShowIndex, 1);
+  if (mainShowIndex >= 0) {
+    searchResultItems[mainShowIndex].classList.remove('added-to-favs');
+  }
+  renderFavShows(favShows, '#fav-shows-container');
+  saveLocalStorage();
+  updateCounter();
 }
 
-button.addEventListener('click', handleClick);
+// and then, it checks if we've already added to favs, if we haven't, it adds it to our favShows array, if we had, it removes it (also removes the background color)
 
 // local storage
 
@@ -196,6 +196,28 @@ function painFromLocalStorage() {
   }
 }
 
+function updateCounter() {
+  counter.innerHTML = `${favShows.length} favs`;
+  saveLocalStorage();
+}
+
+// click handler
+
+function handleClick(ev) {
+  ev.preventDefault();
+  getShowsFromApi();
+}
+
+button.addEventListener('click', handleClick);
+
 painFromLocalStorage();
+
+//intentar que esto no cargue desde el html, lo que hace es que inicia desde el principio estas tres cosas
+function init() {
+  painFromLocalStorage();
+  renderFavShows(favShows, '#fav-shows-container');
+  addListenerToFav();
+  updateCounter();
+}
 
 // form.addEventListener('submit', getShowsFromApi);
