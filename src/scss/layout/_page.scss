@@ -54,18 +54,42 @@ body {
   }
 
   &__favs {
-    padding-left: 50px;
     margin-top: 25px;
     width: 100vw;
     background-color: darksalmon;
+
+    &__title {
+      text-align: center;
+      color: $color-background;
+    }
 
     &__info {
       display: flex;
       justify-content: center;
       color: $color-background;
 
+      .click {
+        margin: 10px 10px 10px 0;
+      }
+
       &__counter {
-        margin-right: 10px;
+        margin: 10px 10px 10px 0;
+      }
+
+      &__reset {
+        color: $color-background;
+        text-align: center;
+        font-size: 0.75rem;
+        line-height: 40px;
+        display: flex;
+        justify-content: center;
+
+        .fa {
+          margin-top: 10px;
+          margin-bottom: 20px;
+          font-size: 20px;
+          margin-right: 10px;
+        }
       }
     }
     &__list {

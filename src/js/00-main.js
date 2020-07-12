@@ -53,7 +53,7 @@ function getShowsFromApi() {
 function renderFavShows(arr, selector) {
   let codeHTML = '';
   if (arr.length === 0) {
-    codeHTML += `<h2 class="show-title">No tienes ningún favorito.</h2>`;
+    codeHTML += `<h2 class="show-title main__favs__title">No tienes ningún favorito.</h2>`;
   } else {
     for (let item of arr) {
       {
