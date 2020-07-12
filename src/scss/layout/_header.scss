@@ -2,11 +2,15 @@
   display: flex;
   justify-content: space-evenly;
   margin-bottom: 3rem;
+  min-width: 500px;
 
   &__title {
     padding-top: 3rem;
     font-family: $font-title;
-    font-size: 4.5rem;
+    font-size: 3rem;
+    @include tablet {
+      font-size: 4.5rem;
+    }
     color: $color-secondary;
   }
 }

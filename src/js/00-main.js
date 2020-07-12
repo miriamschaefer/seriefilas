@@ -54,6 +54,7 @@ function renderFavShows(arr, selector) {
   let codeHTML = '';
   if (arr.length === 0) {
     codeHTML += `<h2 class="show-title main__favs__title">No tienes ningún favorito.</h2>`;
+    resetButton.classList.add('hidden');
   } else {
     for (let item of arr) {
       {
@@ -65,6 +66,7 @@ function renderFavShows(arr, selector) {
         codeHTML += `<h3 class="show-remove js-remove-fav"><i class="fa fa-trash" aria-hidden="true"></i></h3>`;
         codeHTML += `</li>`;
       }
+      resetButton.classList.remove('hidden');
     }
   }
   const element = document.querySelector(selector);

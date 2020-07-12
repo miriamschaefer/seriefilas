@@ -6,6 +6,7 @@ body {
 }
 
 .main {
+  min-width: 500px;
   margin-bottom: 100px;
   display: flex;
   flex-direction: column;
@@ -32,6 +33,9 @@ body {
         width: 250px;
         border: none;
         border-radius: 20px;
+        padding-left: 15px;
+        outline: none;
+        color: $color-black;
       }
 
       &__button {
@@ -41,32 +45,100 @@ body {
         border-radius: 15px;
         color: $color-white;
         background-color: $color-secondary;
+
+        &:active {
+          transform: translateY(4px);
+        }
       }
     }
   }
 
   &__results {
     &__list {
+      max-width: 600px;
+
+      @include tablet {
+        max-width: 1200px;
+      }
+      margin: 50px 75px 0 90px;
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
+
+      .show-container {
+        margin-right: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 15px;
+        width: 150px;
+        height: 225px;
+        font-size: 10px;
+        padding: 10px 10px 0 10px;
+        text-align: center;
+        margin-bottom: 15px;
+        box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.5);
+        &:active {
+          transform: translateY(4px);
+        }
+
+        .show-title {
+          padding: 5px 5px 5px 5px;
+          font-size: 12px;
+        }
+        .img-container {
+          margin-left: 5px;
+          margin-right: 2px;
+          margin-bottom: 5px;
+          width: 120px;
+          height: 150px;
+
+          .show-image {
+            border-radius: 15px;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            overflow: hidden;
+          }
+        }
+      }
     }
   }
 
   &__favs {
+    max-width: 350px;
+
+    @include tablet {
+      max-width: 600px;
+    }
+    border-radius: 25px;
     margin-top: 25px;
     width: 100vw;
-    background-color: darksalmon;
+    padding-top: 15px;
+    background-color: $color-secondary;
 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     &__title {
       text-align: center;
       color: $color-background;
+      margin-bottom: 40px;
     }
 
     &__info {
       display: flex;
+      align-items: center;
       justify-content: center;
       color: $color-background;
+      margin-bottom: 15px;
+
+      &__block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
 
       .click {
         margin: 10px 10px 10px 0;
@@ -77,27 +149,54 @@ body {
       }
 
       &__reset {
+        margin-left: 20px;
+        width: 50px;
+        height: 50px;
         color: $color-background;
-        text-align: center;
         font-size: 0.75rem;
         line-height: 40px;
-        display: flex;
-        justify-content: center;
+
+        :hover {
+          color: $color-white;
+          transform: scale(1);
+          animation: pulse 1s infinite;
+
+          @keyframes pulse {
+            0% {
+              transform: scale(0.75);
+            }
+
+            70% {
+              transform: scale(1);
+            }
+
+            100% {
+              transform: scale(0.75);
+            }
+          }
+        }
 
         .fa {
           margin-top: 10px;
           margin-bottom: 20px;
           font-size: 20px;
-          margin-right: 10px;
         }
       }
     }
     &__list {
       display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      @include tablet {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
 
       .show-container {
+        box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.5);
+
         display: flex;
         justify-content: space-evenly;
         align-items: center;
@@ -109,6 +208,9 @@ body {
         margin-right: 5px;
         text-align: center;
         margin-bottom: 15px;
+        &:active {
+          transform: translateY(4px);
+        }
 
         .img-container {
           margin-left: 5px;
@@ -138,8 +240,8 @@ body {
 }
 
 .added-to-favs {
-  background-color: $color-secondary;
-  color: $color-white;
+  background-color: $color-tertiary;
+  color: $color-background;
 }
 
 .hidden {
