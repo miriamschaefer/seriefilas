@@ -1,33 +1,38 @@
 'use strict';
 
 // pending to activate the enter button to submit
-// const form = document.querySelector('.js-form');
+const form = document.querySelector('.js-form');
 
 //search button
-const button = document.querySelector('#js-button');
+const searchButton = document.querySelector('#js-button');
 
 //fav counter
-
 let counter = document.querySelector('#fav-counter');
 
-//items in the mainsearch results container, used to remove the favs from the result section
+//fav section
 
-let searchResultItems = '';
+// const favArea = document.querySelector('.js-favs-section');
+
+//reset button
+const resetButton = document.querySelector('.js-reset');
 
 //search text input
-
 const searchInput = document.querySelector('#js-search-input');
 
 //API URL
 const ENDPOINT = 'http://api.tvmaze.com/search/shows?q=';
 
+//empty arrays and object
 let shows = [];
 let favShows = [];
 let showObject = {};
 
+//items in the mainsearch results container, used to remove the favs from the result section
+let searchResultItems = '';
+
 //Get shows data from API
 function getShowsFromApi() {
-  fetch(ENDPOINT + searchInput.value)
+  fetch(ENDPOINT + `${searchInput.value}`)
     .then((response) => response.json())
     .then((data) => {
       shows = [];
@@ -39,8 +44,7 @@ function getShowsFromApi() {
         } else {
           img = 'https://via.placeholder.com/210x295/ffffff/666666/?text=TV';
         }
-
-        //show info in our object
+        //gets all the show info and keeps it in an object
 
         showObject = {
           name: item.show.name,
@@ -56,7 +60,7 @@ function getShowsFromApi() {
     });
 }
 
-// render info in HTML, to use this function you have to assign its parameters, both the array to paint and the selector -or place- you wanna render it.
+//render info in HTML, to use this function you have to assign its parameters, both the array to paint and the selector -or place- you wanna render it.
 
 function renderShows(arr, selector) {
   let codeHTML = '';
@@ -119,7 +123,7 @@ function addListeners() {
   saveLocalStorage();
 }
 
-//this is the remove from favs listener (the x button)
+//this is the remove from favs listener
 
 function addListenerToFav() {
   const deleteFav = document.querySelectorAll('.js-fav-show-container');
@@ -141,7 +145,7 @@ function addToFavs(ev) {
     (elem) => elem.id === clickedShowId
   );
 
-  //and then, it checks if we've already added to favs, if we haven't, it adds it to our favShows array, if we had, it removes it (also removes the background color)
+  //and then, it checks if we've already added to favs, if we haven't, it adds it to our favShows array, if we had, it removes it (also removes the background color).
 
   if (clickedShowIndex === -1) {
     const favShow = shows.find((show) => show.id === clickedShowId);
@@ -223,6 +227,11 @@ function handleClick(ev) {
   getShowsFromApi();
 }
 
+function handleSubmit(ev) {
+  ev.preventDefault();
+  getShowsFromApi();
+}
+
 //function that reloads the Local Storage
 function reloadData() {
   painFromLocalStorage();
@@ -231,18 +240,20 @@ function reloadData() {
   updateCounter();
 }
 
-painFromLocalStorage();
-
 // function that erases the local storage (hence the favs list too).
 function resetFavs() {
   localStorage.removeItem('favs');
   location.reload();
 }
 
-const resetButton = document.querySelector('.js-reset');
+painFromLocalStorage();
+
+// events
 resetButton.addEventListener('click', resetFavs);
 
-button.addEventListener('click', handleClick);
-document.addEventListener('DOMContentLoaded', reloadData);
+//search action (click & enter)
+searchButton.addEventListener('click', handleClick);
+form.addEventListener('submit', handleSubmit);
 
-// form.addEventListener('submit', getShowsFromApi);
+//prints the data saved in localstorage
+document.addEventListener('DOMContentLoaded', reloadData);
