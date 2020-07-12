@@ -57,6 +57,15 @@ body {
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
+
+      .show-container {
+        border: 1px solid red;
+        width: 150px;
+      }
+
+      .img-container {
+        width: 150px;
+      }
     }
   }
 }

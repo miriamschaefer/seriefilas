@@ -1,6 +1,8 @@
 <main class="main">
   <section class="main__search">
-    <h2 class="main__search__title">Inserte aquí su buscador de series</h2>
+    <h2 class="main__search__title">
+      🍿 Busca y guarda tus series favoritas 🍿
+    </h2>
     <form method="GET" class="main__search__form js-form" id="js-form">
       <input
         type="text"
@@ -14,11 +16,17 @@
     </form>
   </section>
 
+  <section class="main__favs">
+    <div class="main__favs__info">
+      <div class="main___favs__info__reset js-reset">
+        <i class="fa fa-trash" aria-hidden="true"></i>
+      </div>
+      <p class="main__favs__info__counter" id="fav-counter">0 favs</p>
+    </div>
+    <ul class="main__favs__list" id="fav-shows-container"></ul>
+  </section>
+
   <section class="main__results">
     <ul class="main__results__list" id="shows-search-result"></ul>
-  </section>
-  <section class="main__favs">
-    <p class="main__favs__counter" id="fav-counter">0 favs</p>
-    <ul class="main__favs__list" id="fav-shows-container"></ul>
   </section>
 </main>

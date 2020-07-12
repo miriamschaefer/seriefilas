@@ -68,7 +68,7 @@ function renderShows(arr, selector) {
       {
         codeHTML += `<li class="show-container js-main-show-container" id="${item.id}">`;
         codeHTML += `<div class="img-container">`;
-        codeHTML += `<img src="${item.image}"/>`;
+        codeHTML += `<img class="show-image" src="${item.image}"/>`;
         codeHTML += `</div>`;
         codeHTML += `<h2 class="show-title">${item.name}</h2>`;
         codeHTML += `</li>`;
@@ -93,7 +93,7 @@ function renderFavShows(arr, selector) {
       {
         codeHTML += `<li class="show-container js-fav-show-container added-to-favs" id="${item.id}">`;
         codeHTML += `<div class="img-container">`;
-        codeHTML += `<img src="${item.image}"/>`;
+        codeHTML += `<img class="show-image" src="${item.image}"/>`;
         codeHTML += `</div>`;
         codeHTML += `<h2 class="show-title">${item.name}</h2>`;
         codeHTML += `<h3 class="show-remove js-remove-fav">X</h3>`;
@@ -141,8 +141,6 @@ function addToFavs(ev) {
     (elem) => elem.id === clickedShowId
   );
 
-  // console.log(clickedShowIndex);
-
   //and then, it checks if we've already added to favs, if we haven't, it adds it to our favShows array, if we had, it removes it (also removes the background color)
 
   if (clickedShowIndex === -1) {
@@ -162,15 +160,18 @@ function addToFavs(ev) {
 }
 
 function removeFromFavs(ev) {
-  //this anon function - clickedShowIndex - looks for the position in the array of the object we wanna add to favs.
+  //this anon function - favShowIndex - looks for the position in the array of the object we wanna add remove from favs.
   const removeThisFav = ev.currentTarget;
   const removeThisFavId = parseInt(removeThisFav.id);
+
+  //then, with these two functions we look for the id we clicked in faves so we can remove it from the search result area.
+
   const favShowIndex = favShows.findIndex(
     (elem) => elem.id === removeThisFavId
   );
   const mainShowIndex = shows.findIndex((elem) => elem.id === removeThisFavId);
 
-  console.log(favShowIndex);
+  // we remove it from the favShow array, and then, we look for its index in the result section.
   favShows.splice(favShowIndex, 1);
   if (mainShowIndex >= 0) {
     searchResultItems[mainShowIndex].classList.remove('added-to-favs');
@@ -180,7 +181,19 @@ function removeFromFavs(ev) {
   updateCounter();
 }
 
-// and then, it checks if we've already added to favs, if we haven't, it adds it to our favShows array, if we had, it removes it (also removes the background color)
+// check if a show is in the favs array, so when we render the shows, we can add the favs class to the html element.
+
+// con esto estoy intentando que si el array de favoritos contiene un id igual al que se pinta, me añada también la clase de favoritos y se pinta
+
+// function paintFavInSearchResults(arr) {
+
+//   if (arr.contains(showObject.id) === true) {
+
+//     const showId = shows.findIndex((elem) => elem.id === removeThisFavId);
+//     mainShowIndex.classsList.add('added-to-favs');
+// saveLocalStorage();
+//   }
+// }
 
 // local storage
 
@@ -196,6 +209,8 @@ function painFromLocalStorage() {
   }
 }
 
+//counter update
+
 function updateCounter() {
   counter.innerHTML = `${favShows.length} favs`;
   saveLocalStorage();
@@ -208,16 +223,26 @@ function handleClick(ev) {
   getShowsFromApi();
 }
 
-button.addEventListener('click', handleClick);
-
-painFromLocalStorage();
-
-//intentar que esto no cargue desde el html, lo que hace es que inicia desde el principio estas tres cosas
-function init() {
+//function that reloads the Local Storage
+function reloadData() {
   painFromLocalStorage();
   renderFavShows(favShows, '#fav-shows-container');
   addListenerToFav();
   updateCounter();
 }
+
+painFromLocalStorage();
+
+// function that erases the local storage (hence the favs list too).
+function resetFavs() {
+  localStorage.removeItem('favs');
+  location.reload();
+}
+
+const resetButton = document.querySelector('.js-reset');
+resetButton.addEventListener('click', resetFavs);
+
+button.addEventListener('click', handleClick);
+document.addEventListener('DOMContentLoaded', reloadData);
 
 // form.addEventListener('submit', getShowsFromApi);
