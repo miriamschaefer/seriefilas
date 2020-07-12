@@ -62,6 +62,7 @@ body {
     &__info {
       display: flex;
       justify-content: center;
+      color: $color-background;
 
       &__counter {
         margin-right: 10px;

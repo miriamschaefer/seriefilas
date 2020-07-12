@@ -20,14 +20,17 @@
     <div class="main__favs__info">
       <p class="main__favs__info__counter" id="fav-counter">0 favs</p>
       <div class="click">
-        <button><i class="fas fa-angle-up"></i></button>
-        <button><i class="fas fa-angle-down"></i></button>
+        <button><i class="fas fa-angle-up js-arrow-up hidden"></i></button>
+        <button><i class="fas fa-angle-down js-arrow-down"></i></button>
       </div>
     </div>
-    <div class="main___favs__info__reset js-reset">
-      <i class="fa fa-trash" aria-hidden="true"></i>
+    <div class="js-hide-favs hidden">
+      <ul class="main__favs__list" id="fav-shows-container"></ul>
+      <div class="main___favs__info__reset js-reset">
+        <i class="fa fa-trash" aria-hidden="true"></i>
+        <p>Borra tus favoritos 🥺</p>
+      </div>
     </div>
-    <ul class="main__favs__list" id="fav-shows-container"></ul>
   </section>
 
   <section class="main__results">
