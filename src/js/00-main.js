@@ -82,9 +82,10 @@ function renderShows(arr, selector) {
       {
         codeHTML += `<li class="show-container js-main-show-container" id="${item.id}">`;
         codeHTML += `<div class="img-container">`;
-        codeHTML += `<img class="show-image" src="${item.image}"/>`;
+        codeHTML += `<img class="show-image" title="${item.name}" src="${item.image}"/>`;
         codeHTML += `</div>`;
         codeHTML += `<h2 class="show-title">${item.name}</h2>`;
+        codeHTML += `<a href=${item.url} target="_blank" title="Check ${item.name} info" class="show-text">Check info</a>`;
         codeHTML += `</li>`;
       }
     }
