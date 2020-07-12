@@ -42,7 +42,7 @@ function getShowsFromApi() {
         };
         shows.push(showObject);
       }
-      renderShows(shows, '#shows-search-result', showObject);
+      renderShows(shows, '#shows-search-result');
       renderFavShows(favShows, '#fav-shows-container');
       addListeners();
       addListenerToFav();
@@ -170,13 +170,13 @@ function removeFromFavs(ev) {
 }
 // check if a show is in the favs array, so when we render the shows, we can add the favs class to the html element.
 // con esto estoy intentando que si el array de favoritos contiene un id igual al que se pinta, me añada también la clase de favoritos y se pinta
-function paintFavsInSearchResults() {
-  // we remove it from the favShow array, and then, we look for its index in the result section.
-  if (searchResultItems.fav === true) {
-    searchResultItems.classList.add('added-to-favs');
-  }
-  saveLocalStorage();
-}
+// function paintFavsInSearchResults() {
+//   // we remove it from the favShow array, and then, we look for its index in the result section.
+//   if (searchResultItems.fav === true) {
+//     searchResultItems.classList.add('added-to-favs');
+//   }
+//   saveLocalStorage();
+// }
 // local storage
 function saveLocalStorage() {
   localStorage.setItem('favs', JSON.stringify(favShows));
