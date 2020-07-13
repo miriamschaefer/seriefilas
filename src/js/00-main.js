@@ -5,8 +5,6 @@ const form = document.querySelector('.js-form');
 const searchButton = document.querySelector('#js-button');
 //fav counter
 let counter = document.querySelector('#fav-counter');
-//fav section
-// const favArea = document.querySelector('.js-favs-section');
 //reset button
 const resetButton = document.querySelector('.js-reset');
 //search text input
@@ -19,6 +17,7 @@ let favShows = [];
 let showObject = {};
 //items in the mainsearch results container, used to remove the favs from the result section
 let searchResultItems = '';
+
 //Get shows data from API
 function getShowsFromApi() {
   fetch(ENDPOINT + `${searchInput.value}`)
@@ -46,7 +45,6 @@ function getShowsFromApi() {
       renderFavShows(favShows, '#fav-shows-container');
       addListeners();
       addListenerToFav();
-      // paintFavInSearchResults();
     });
 }
 
@@ -77,10 +75,13 @@ function renderFavShows(arr, selector) {
 
 function renderShows(arr, selector) {
   let codeHTML = '';
+
+  //this isn't working atm, i know it's because it's not linked to the second property with an else
+
   if (arr.length === 0) {
     codeHTML += `<h2 class="show-title">No hemos encontrado naíta.</h2>`;
   }
-
+  //working on this conditional, atm it doesn't do anything as I'm working with the id, not the fav property of the objects.
   for (let item of arr) {
     if (item.fav === false) {
       codeHTML += `<li class="show-container js-main-show-container" id="${item.id}">`;
@@ -93,7 +94,7 @@ function renderShows(arr, selector) {
     } else {
       for (let item of arr) {
         {
-          codeHTML += `<li class="show-container js-main-show-container added-to-favs" id="${item.id}">`;
+          codeHTML += `<li class="show-container js-main-show-container id="${item.id}">`;
           codeHTML += `<div class="img-container">`;
           codeHTML += `<img class="show-image" src="${item.image}"/>`;
           codeHTML += `</div>`;
@@ -110,7 +111,6 @@ function renderShows(arr, selector) {
     //this allows us to remove the shows which are inside the fav list
     searchResultItems = element.querySelectorAll('.js-main-show-container');
   }
-  // findFav();
   checkFavorites();
 }
 //function to
@@ -159,6 +159,7 @@ function addToFavs(ev) {
   //and then, it checks if we've already added to favs, if we haven't, it adds it to our favShows array, if we had, it removes it (also removes the background color).
   if (clickedShowIndex === -1) {
     const favShow = shows.find((show) => show.id === clickedShowId);
+    //decided to use id to locate favs instead of this, but will work on it in the future.
     favShow.fav = true;
     favShows.push(favShow);
     clickedShow.classList.add('added-to-favs');
