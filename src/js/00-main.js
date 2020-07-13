@@ -80,10 +80,8 @@ function renderShows(arr, selector) {
 
   if (arr.length === 0) {
     codeHTML += `<h2 class="show-title">No hemos encontrado naíta.</h2>`;
-  }
-  //working on this conditional, atm it doesn't do anything as I'm working with the id, not the fav property of the objects.
-  for (let item of arr) {
-    if (item.fav === false) {
+  } else {
+    for (let item of arr) {
       codeHTML += `<li class="show-container js-main-show-container" id="${item.id}">`;
       codeHTML += `<div class="img-container">`;
       codeHTML += `<img class="show-image" title="${item.name}" src="${item.image}"/>`;
@@ -91,27 +89,15 @@ function renderShows(arr, selector) {
       codeHTML += `<h2 class="show-title">${item.name}</h2>`;
       codeHTML += `<a href=${item.url} target="_blank" title="Check ${item.name} info" class="show-text">Check info</a>`;
       codeHTML += `</li>`;
-    } else {
-      for (let item of arr) {
-        {
-          codeHTML += `<li class="show-container js-main-show-container id="${item.id}">`;
-          codeHTML += `<div class="img-container">`;
-          codeHTML += `<img class="show-image" src="${item.image}"/>`;
-          codeHTML += `</div>`;
-          codeHTML += `<h2 class="show-title">${item.name}</h2>`;
-          codeHTML += `</li>`;
-        }
-      }
-
-      addToFavs();
     }
-
-    const element = document.querySelector(selector);
-    element.innerHTML = codeHTML;
-    //this allows us to remove the shows which are inside the fav list
-    searchResultItems = element.querySelectorAll('.js-main-show-container');
   }
+
+  const element = document.querySelector(selector);
+  element.innerHTML = codeHTML;
+  //working on this conditional, atm it doesn't do anything as I'm working with the id, not the fav property of the objects.
+  addListeners();
   checkFavorites();
+  addListenerToFav();
 }
 //function to
 function checkFavorites() {
