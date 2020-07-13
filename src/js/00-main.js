@@ -49,23 +49,24 @@ function getShowsFromApi() {
       // paintFavInSearchResults();
     });
 }
+
 //render info in HTML, to use this function you have to assign its parameters, both the array to paint and the selector -or place- you wanna render it.
 function renderFavShows(arr, selector) {
   let codeHTML = '';
+
   if (arr.length === 0) {
     codeHTML += `<h2 class="show-title main__favs__title">No tienes ningún favorito.</h2>`;
     resetButton.classList.add('hidden');
   } else {
     for (let item of arr) {
-      {
-        codeHTML += `<li class="show-container js-fav-show-container added-to-favs" id="${item.id}">`;
-        codeHTML += `<div class="img-container">`;
-        codeHTML += `<img class="show-image" src="${item.image}"/>`;
-        codeHTML += `</div>`;
-        codeHTML += `<h2 class="show-title">${item.name}</h2>`;
-        codeHTML += `<h3 class="show-remove js-remove-fav"><i class="fa fa-trash" aria-hidden="true"></i></h3>`;
-        codeHTML += `</li>`;
-      }
+      codeHTML += `<li class="show-container js-fav-show-container added-to-favs" id="${item.id}">`;
+      codeHTML += `<div class="img-container">`;
+      codeHTML += `<img class="show-image" src="${item.image}"/>`;
+      codeHTML += `</div>`;
+      codeHTML += `<h2 class="show-title">${item.name}</h2>`;
+      codeHTML += `<h3 class="show-remove js-remove-fav"><i class="fa fa-trash" aria-hidden="true"></i></h3>`;
+      codeHTML += `</li>`;
+
       resetButton.classList.remove('hidden');
     }
   }
@@ -73,41 +74,98 @@ function renderFavShows(arr, selector) {
   element.innerHTML = codeHTML;
   addListenerToFav();
 }
+
+// const findFav = (fav) => {
+//   return favShows.find((isAFav) => isAFav.show.fav === fav);
+// };
+
 function renderShows(arr, selector) {
+  // function findFav() {
+  //   console.log(favShows);
+
+  //   for (const item of favShows) {
+  //     //const isAFav = item.fav === true;
+
+  //     if (item.fav === true) {
+  //       addedToFavs = item;
+  //     }
+  //     if (arr.length === 0) {
+  //       codeHTML += `<h2 class="show-title">No hemos encontrado naíta.</h2>`;
+  //     }
+  //     for (let item of arr) {
+  //       if (isAFav === false) {
+  //         codeHTML += `<li class="show-container js-main-show-container" id="${item.id}">`;
+  //         codeHTML += `<div class="img-container">`;
+  //         codeHTML += `<img class="show-image" title="${item.name}" src="${item.image}"/>`;
+  //         codeHTML += `</div>`;
+  //         codeHTML += `<h2 class="show-title">${item.name}</h2>`;
+  //         codeHTML += `<a href=${item.url} target="_blank" title="Check ${item.name} info" class="show-text">Check info</a>`;
+  //         codeHTML += `</li>`;
+  //       } else {
+  //         for (let item of arr) {
+  //           {
+  //             codeHTML += `<li class="show-container js-main-show-container added-to-favs" id="${item.id}">`;
+  //             codeHTML += `<div class="img-container">`;
+  //             codeHTML += `<img class="show-image" src="${item.image}"/>`;
+  //             codeHTML += `</div>`;
+  //             codeHTML += `<h2 class="show-title">${item.name}</h2>`;
+  //             codeHTML += `</li>`;
+  //           }
+  //         }
+  //       }
+  //     }
+
   let codeHTML = '';
   if (arr.length === 0) {
     codeHTML += `<h2 class="show-title">No hemos encontrado naíta.</h2>`;
-  } else if (showObject.fav === false) {
-    for (let item of arr) {
-      {
-        codeHTML += `<li class="show-container js-main-show-container" id="${item.id}">`;
-        codeHTML += `<div class="img-container">`;
-        codeHTML += `<img class="show-image" title="${item.name}" src="${item.image}"/>`;
-        codeHTML += `</div>`;
-        codeHTML += `<h2 class="show-title">${item.name}</h2>`;
-        codeHTML += `<a href=${item.url} target="_blank" title="Check ${item.name} info" class="show-text">Check info</a>`;
-        codeHTML += `</li>`;
-      }
-    }
-  } else {
-    for (let item of arr) {
-      {
-        codeHTML += `<li class="show-container js-main-show-container added-to-favs" id="${item.id}">`;
-        codeHTML += `<div class="img-container">`;
-        codeHTML += `<img class="show-image" src="${item.image}"/>`;
-        codeHTML += `</div>`;
-        codeHTML += `<h2 class="show-title">${item.name}</h2>`;
-        codeHTML += `</li>`;
-      }
-    }
-    addToFavs();
   }
-  const element = document.querySelector(selector);
-  element.innerHTML = codeHTML;
-  paintFavsInSearchResults();
-  //this allows us to remove the shows which are inside the fav list
-  searchResultItems = element.querySelectorAll('.js-main-show-container');
+
+  for (let item of arr) {
+    if (item.fav === false) {
+      codeHTML += `<li class="show-container js-main-show-container" id="${item.id}">`;
+      codeHTML += `<div class="img-container">`;
+      codeHTML += `<img class="show-image" title="${item.name}" src="${item.image}"/>`;
+      codeHTML += `</div>`;
+      codeHTML += `<h2 class="show-title">${item.name}</h2>`;
+      codeHTML += `<a href=${item.url} target="_blank" title="Check ${item.name} info" class="show-text">Check info</a>`;
+      codeHTML += `</li>`;
+    } else {
+      for (let item of arr) {
+        {
+          codeHTML += `<li class="show-container js-main-show-container added-to-favs" id="${item.id}">`;
+          codeHTML += `<div class="img-container">`;
+          codeHTML += `<img class="show-image" src="${item.image}"/>`;
+          codeHTML += `</div>`;
+          codeHTML += `<h2 class="show-title">${item.name}</h2>`;
+          codeHTML += `</li>`;
+        }
+      }
+
+      addToFavs();
+    }
+
+    const element = document.querySelector(selector);
+    element.innerHTML = codeHTML;
+    //this allows us to remove the shows which are inside the fav list
+    searchResultItems = element.querySelectorAll('.js-main-show-container');
+  }
+  // findFav();
+  checkFavorites();
 }
+
+function checkFavorites() {
+  const resultList = document.querySelectorAll('.js-main-show-container');
+
+  for (const result of resultList) {
+    const favObject = favShows.find((show) => parseInt(result.id) === show.id);
+    if (parseInt(result.id) === favObject.id) {
+      result.classList.add('added-to-favs');
+    }
+  }
+
+  console.log(resultList);
+}
+
 // add listeners to the items, so they recognize clicks on them.
 function addListeners() {
   const fav = document.querySelectorAll('.js-main-show-container');
@@ -127,6 +185,7 @@ function addListenerToFav() {
     }
   }
 }
+
 // function to add and remove shows from favorites from the main section.
 function addToFavs(ev) {
   //this anon function - clickedShowIndex - looks for the position in the array of the object we wanna add to favs.
@@ -138,8 +197,8 @@ function addToFavs(ev) {
   //and then, it checks if we've already added to favs, if we haven't, it adds it to our favShows array, if we had, it removes it (also removes the background color).
   if (clickedShowIndex === -1) {
     const favShow = shows.find((show) => show.id === clickedShowId);
+    favShow.fav = true;
     favShows.push(favShow);
-    clickedShow.fav = true;
     clickedShow.classList.add('added-to-favs');
   } else {
     favShows.splice(clickedShowIndex, 1);
@@ -168,15 +227,27 @@ function removeFromFavs(ev) {
   saveLocalStorage();
   updateCounter();
 }
-// check if a show is in the favs array, so when we render the shows, we can add the favs class to the html element.
+
 // con esto estoy intentando que si el array de favoritos contiene un id igual al que se pinta, me añada también la clase de favoritos y se pinta
 // function paintFavsInSearchResults() {
-//   // we remove it from the favShow array, and then, we look for its index in the result section.
 //   if (searchResultItems.fav === true) {
 //     searchResultItems.classList.add('added-to-favs');
 //   }
 //   saveLocalStorage();
 // }
+
+// function compareArrays(arr1, arr2) {
+//   const finalArray = [];
+//   arr1.forEach((element1) =>
+//     arr2.forEach((element2) => {
+//       if (element1 === element2) {
+//         finalArray.push(e1);
+//       }
+//     })
+//   );
+//   console.log(compareArrays(favShows, shows));
+// }
+
 // local storage
 function saveLocalStorage() {
   localStorage.setItem('favs', JSON.stringify(favShows));

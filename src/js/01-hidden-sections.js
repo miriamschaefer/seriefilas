@@ -1,3 +1,5 @@
+'use strict';
+
 const click = document.querySelector('.click');
 const section = document.querySelector('.js-hide-favs');
 const arrowDown = document.querySelector('.js-arrow-down');
