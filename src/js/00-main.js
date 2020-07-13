@@ -32,7 +32,7 @@ function getShowsFromApi() {
         } else {
           img = 'https://via.placeholder.com/210x295/ffffff/666666/?text=TV';
         }
-        //gets all the show info and keeps it in an object
+        //gets all the show info and keeps it in an object. wanted to add the fav part as i wanna work on getting the favs from confirming if it's true or false in the future.
         showObject = {
           name: item.show.name,
           image: img,
@@ -76,8 +76,6 @@ function renderFavShows(arr, selector) {
 function renderShows(arr, selector) {
   let codeHTML = '';
 
-  //this isn't working atm, i know it's because it's not linked to the second property with an else
-
   if (arr.length === 0) {
     codeHTML += `<h2 class="show-title">No hemos encontrado naíta.</h2>`;
   } else {
@@ -94,12 +92,12 @@ function renderShows(arr, selector) {
 
   const element = document.querySelector(selector);
   element.innerHTML = codeHTML;
-  //working on this conditional, atm it doesn't do anything as I'm working with the id, not the fav property of the objects.
+
   addListeners();
   checkFavorites();
   addListenerToFav();
 }
-//function to
+//function to check if a favorite show is in the search shows arrays, if it is, it adds the added-to-favs class.
 function checkFavorites() {
   let resultList = document.querySelectorAll('.js-main-show-container');
 
