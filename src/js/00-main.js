@@ -75,46 +75,7 @@ function renderFavShows(arr, selector) {
   addListenerToFav();
 }
 
-// const findFav = (fav) => {
-//   return favShows.find((isAFav) => isAFav.show.fav === fav);
-// };
-
 function renderShows(arr, selector) {
-  // function findFav() {
-  //   console.log(favShows);
-
-  //   for (const item of favShows) {
-  //     //const isAFav = item.fav === true;
-
-  //     if (item.fav === true) {
-  //       addedToFavs = item;
-  //     }
-  //     if (arr.length === 0) {
-  //       codeHTML += `<h2 class="show-title">No hemos encontrado naíta.</h2>`;
-  //     }
-  //     for (let item of arr) {
-  //       if (isAFav === false) {
-  //         codeHTML += `<li class="show-container js-main-show-container" id="${item.id}">`;
-  //         codeHTML += `<div class="img-container">`;
-  //         codeHTML += `<img class="show-image" title="${item.name}" src="${item.image}"/>`;
-  //         codeHTML += `</div>`;
-  //         codeHTML += `<h2 class="show-title">${item.name}</h2>`;
-  //         codeHTML += `<a href=${item.url} target="_blank" title="Check ${item.name} info" class="show-text">Check info</a>`;
-  //         codeHTML += `</li>`;
-  //       } else {
-  //         for (let item of arr) {
-  //           {
-  //             codeHTML += `<li class="show-container js-main-show-container added-to-favs" id="${item.id}">`;
-  //             codeHTML += `<div class="img-container">`;
-  //             codeHTML += `<img class="show-image" src="${item.image}"/>`;
-  //             codeHTML += `</div>`;
-  //             codeHTML += `<h2 class="show-title">${item.name}</h2>`;
-  //             codeHTML += `</li>`;
-  //           }
-  //         }
-  //       }
-  //     }
-
   let codeHTML = '';
   if (arr.length === 0) {
     codeHTML += `<h2 class="show-title">No hemos encontrado naíta.</h2>`;
@@ -152,7 +113,7 @@ function renderShows(arr, selector) {
   // findFav();
   checkFavorites();
 }
-
+//function to
 function checkFavorites() {
   let resultList = document.querySelectorAll('.js-main-show-container');
 
@@ -162,13 +123,9 @@ function checkFavorites() {
     );
 
     if (favObject >= 0) {
-      // if (parseInt(result.id) === favObject.id) {
       result.classList.add('added-to-favs');
-      // }
     }
   }
-
-  console.log(resultList);
 }
 
 // add listeners to the items, so they recognize clicks on them.
@@ -232,26 +189,6 @@ function removeFromFavs(ev) {
   saveLocalStorage();
   updateCounter();
 }
-
-// con esto estoy intentando que si el array de favoritos contiene un id igual al que se pinta, me añada también la clase de favoritos y se pinta
-// function paintFavsInSearchResults() {
-//   if (searchResultItems.fav === true) {
-//     searchResultItems.classList.add('added-to-favs');
-//   }
-//   saveLocalStorage();
-// }
-
-// function compareArrays(arr1, arr2) {
-//   const finalArray = [];
-//   arr1.forEach((element1) =>
-//     arr2.forEach((element2) => {
-//       if (element1 === element2) {
-//         finalArray.push(e1);
-//       }
-//     })
-//   );
-//   console.log(compareArrays(favShows, shows));
-// }
 
 // local storage
 function saveLocalStorage() {

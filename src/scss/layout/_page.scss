@@ -1,8 +1,7 @@
 body {
   height: 100vh;
   font-family: $font-main;
-  background-color: $color-background;
-  color: $color-tertiary;
+  color: $color-black;
 }
 
 .main {
@@ -241,7 +240,7 @@ body {
 
 .added-to-favs {
   background-color: $color-tertiary;
-  color: $color-background;
+  color: $color-five;
 }
 
 .hidden {
