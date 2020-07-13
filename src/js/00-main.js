@@ -154,12 +154,17 @@ function renderShows(arr, selector) {
 }
 
 function checkFavorites() {
-  const resultList = document.querySelectorAll('.js-main-show-container');
+  let resultList = document.querySelectorAll('.js-main-show-container');
 
-  for (const result of resultList) {
-    const favObject = favShows.find((show) => parseInt(result.id) === show.id);
-    if (parseInt(result.id) === favObject.id) {
+  for (let result of resultList) {
+    let favObject = favShows.findIndex(
+      (show) => parseInt(result.id) === show.id
+    );
+
+    if (favObject >= 0) {
+      // if (parseInt(result.id) === favObject.id) {
       result.classList.add('added-to-favs');
+      // }
     }
   }
 
