@@ -15,8 +15,6 @@ const ENDPOINT = 'http://api.tvmaze.com/search/shows?q=';
 let shows = [];
 let favShows = [];
 let showObject = {};
-//items in the mainsearch results container, used to remove the favs from the result section
-let searchResultItems = '';
 
 //Get shows data from API
 function getShowsFromApi() {
@@ -37,7 +35,9 @@ function getShowsFromApi() {
           name: item.show.name,
           image: img,
           id: item.show.id,
+          genre: item.show.genres,
           fav: false,
+          url: item.show.url,
         };
         shows.push(showObject);
       }
@@ -85,6 +85,7 @@ function renderShows(arr, selector) {
       codeHTML += `<img class="show-image" title="${item.name}" src="${item.image}"/>`;
       codeHTML += `</div>`;
       codeHTML += `<h2 class="show-title">${item.name}</h2>`;
+      codeHTML += `<p class="show-genre">${item.genre}</p>`;
       codeHTML += `<a href=${item.url} target="_blank" title="Check ${item.name} info" class="show-text">Check info</a>`;
       codeHTML += `</li>`;
     }
@@ -116,12 +117,19 @@ function checkFavorites() {
 function addListeners() {
   const fav = document.querySelectorAll('.js-main-show-container');
   for (const elem of fav) {
-    if (elem !== undefined) {
-      elem.addEventListener('click', addToFavs);
-    }
+    // if (elem !== undefined) {
+    elem.addEventListener('click', consoleName);
+    // }
+    console.log(elem);
   }
+
   saveLocalStorage();
 }
+
+function consoleName(ev) {
+  console.log(ev.currentTarget.querySelector('h2').innerHTML);
+}
+
 //this is the remove from favs listener
 function addListenerToFav() {
   const deleteFav = document.querySelectorAll('.js-fav-show-container');
@@ -133,30 +141,31 @@ function addListenerToFav() {
 }
 
 // function to add and remove shows from favorites from the main section.
-function addToFavs(ev) {
-  //this anon function - clickedShowIndex - looks for the position in the array of the object we wanna add to favs.
-  const clickedShow = ev.currentTarget;
-  const clickedShowId = parseInt(clickedShow.id);
-  const clickedShowIndex = favShows.findIndex(
-    (elem) => elem.id === clickedShowId
-  );
-  //and then, it checks if we've already added to favs, if we haven't, it adds it to our favShows array, if we had, it removes it (also removes the background color).
-  if (clickedShowIndex === -1) {
-    const favShow = shows.find((show) => show.id === clickedShowId);
-    //decided to use id to locate favs instead of this, but will work on it in the future.
-    favShow.fav = true;
-    favShows.push(favShow);
-    clickedShow.classList.add('added-to-favs');
-  } else {
-    favShows.splice(clickedShowIndex, 1);
-    clickedShow.classList.remove('added-to-favs');
-  }
-  //at the same time, we use our render function again to paint our favs in the container.
-  renderFavShows(favShows, '#fav-shows-container');
-  saveLocalStorage();
-  updateCounter();
-}
+// function addToFavs(ev) {
+//   //this anon function - clickedShowIndex - looks for the position in the array of the object we wanna add to favs.
+//   const clickedShow = ev.currentTarget;
+//   const clickedShowId = parseInt(clickedShow.id);
+//   const clickedShowIndex = favShows.findIndex(
+//     (elem) => elem.id === clickedShowId
+//   );
+//   //and then, it checks if we've already added to favs, if we haven't, it adds it to our favShows array, if we had, it removes it (also removes the background color).
+//   if (clickedShowIndex === -1) {
+//     const favShow = shows.find((show) => show.id === clickedShowId);
+//     //decided to use id to locate favs instead of this, but will work on it in the future.
+//     favShow.fav = true;
+//     favShows.push(favShow);
+//     clickedShow.classList.add('added-to-favs');
+//   } else {
+//     favShows.splice(clickedShowIndex, 1);
+//     clickedShow.classList.remove('added-to-favs');
+//   }
+//   //at the same time, we use our render function again to paint our favs in the container.
+//   renderFavShows(favShows, '#fav-shows-container');
+//   saveLocalStorage();
+//   updateCounter();
+// }
 function removeFromFavs(ev) {
+  let searchResultItems = document.querySelectorAll('.js-main-show-container');
   //this anon function - favShowIndex - looks for the position in the array of the object we wanna add remove from favs.
   const removeThisFav = ev.currentTarget;
   const removeThisFavId = parseInt(removeThisFav.id);
