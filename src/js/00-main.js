@@ -16,7 +16,6 @@ let shows = [];
 let favShows = [];
 let showObject = {};
 //items in the mainsearch results container, used to remove the favs from the result section
-let searchResultItems = '';
 
 //Get shows data from API
 function getShowsFromApi() {
@@ -158,6 +157,7 @@ function addToFavs(ev) {
 }
 function removeFromFavs(ev) {
   //this anon function - favShowIndex - looks for the position in the array of the object we wanna add remove from favs.
+  let searchResultItems = document.querySelectorAll('.js-main-show-container');
   const removeThisFav = ev.currentTarget;
   const removeThisFavId = parseInt(removeThisFav.id);
   //then, with these two functions we look for the id we clicked in faves so we can remove it from the search result area.
